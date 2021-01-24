@@ -1,23 +1,15 @@
 pipeline {
-    agent {
-        docker {
-            image '14.15.4-alpine3.10'
-            args '-p 3000:3000'
-        }
+  agent any
+
+  tools { nodejs "nodejs" }
+
+  stages {
+    stage('Test npm') {
+      steps {
+        sh """
+          npm --version
+        """
+      }
     }
-    environment {
-        CI = 'true' 
-    }
-    stages {
-        stage('Build') {
-            steps {
-                sh 'npm install'
-            }
-        }
-        stage('Test') { 
-            steps {
-                sh './jenkins/scripts/test.sh' 
-            }
-        }
-    }
+  }
 }
