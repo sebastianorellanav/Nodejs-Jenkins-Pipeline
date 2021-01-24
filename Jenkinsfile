@@ -1,5 +1,10 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'nodejs-14.15.3'
+    }
+
+  }
   stages {
     stage('build') {
       steps {
@@ -8,8 +13,5 @@ pipeline {
       }
     }
 
-  }
-  environment {
-    nodejs = 'nodejs-14.15.3'
   }
 }
