@@ -9,13 +9,13 @@ pipeline {
         echo "Realizando build ..."
         sh "npm install"
       }
-    },
+    }
     stage('Pruebas Unitarias') {
       steps {
         echo "Realizando pruebas unitarias ..."
         sh "npm test"
       }
-    },
+    }
     stage('Analisis de Código') {
       steps {
         echo "Realizando analisis de código ..."
