@@ -8,7 +8,8 @@ pipeline {
       steps {
         echo "Realizando build ..."
         sh "npm install"
-      },
+      }
+    },
     stage('Pruebas Unitarias') {
       steps {
         echo "Realizando pruebas unitarias ..."
@@ -18,7 +19,8 @@ pipeline {
     stage('Analisis de Código') {
       steps {
         echo "Realizando analisis de código ..."
-        sh "npm run lint"
+        sh 'npm run lint'
       }
   }
+}
 }
