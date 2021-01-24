@@ -1,12 +1,13 @@
 pipeline {
-  agent {
-    node {
-      label 'nodejs-14.15.3'
-    }
-
-  }
+  agent any
   stages {
     stage('build') {
+      agent {
+        node {
+          label 'nodejs'
+        }
+
+      }
       steps {
         echo 'building'
         sh 'npm install'
