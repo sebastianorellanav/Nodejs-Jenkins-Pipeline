@@ -9,4 +9,7 @@ pipeline {
     }
 
   }
+  environment {
+    nodejs = 'nodejs-14.15.3'
+  }
 }
