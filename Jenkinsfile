@@ -4,13 +4,21 @@ pipeline {
   tools { nodejs "nodejs" }
 
   stages {
-    stage('Test npm') {
+    stage('Build') {
       steps {
-        sh """
-          npm --version
-          node -v
-        """
+        echo "Realizando build ..."
+        sh "npm install"
+      },
+    stage('Pruebas Unitarias') {
+      steps {
+        echo "Realizando pruebas unitarias ..."
+        sh "npm test"
       }
-    }
+    },
+    stage('Analisis de Código') {
+      steps {
+        echo "Realizando analisis de código ..."
+        sh "npm run lint"
+      }
   }
 }
