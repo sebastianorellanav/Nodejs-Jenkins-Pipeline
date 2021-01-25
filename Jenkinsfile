@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   tools { nodejs "nodejs"
-          org.jenkinsci.plugins.mongodb.MongoDBInstallation }
+          MongoDBInstallation "mongodb"}
 
   stages {
     stage('Build') {
