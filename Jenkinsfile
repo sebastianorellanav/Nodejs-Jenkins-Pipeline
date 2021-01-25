@@ -32,7 +32,7 @@ pipeline {
   stage('Crear y Subir Imagen App') { 
             steps { 
                 script { 
-                    dockerImage = docker.build registry + ":1"
+                    dockerImage = docker.build registry + ":latest"
                     docker.withRegistry( '', registryCredential ) { 
                         dockerImage.push() 
                     }
