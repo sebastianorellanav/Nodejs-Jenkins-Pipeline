@@ -1,6 +1,6 @@
 pipeline {
   environment { 
-        registry = "sebastianorellanav/mingeso:1.3" 
+        registry = "sebastianorellanav/mingeso" 
         registryCredential = 'dockerhub_credential' 
         dockerImage = '' 
     }
@@ -35,7 +35,7 @@ pipeline {
   stage('Building our image') { 
             steps { 
                 script { 
-                    dockerImage = docker.build registry
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
                 }
             } 
         }
