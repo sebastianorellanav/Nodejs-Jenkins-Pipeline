@@ -24,6 +24,7 @@ pipeline {
             }
           }
         }
+      }
     }
     stage('Analisis de Código') {
       steps {
