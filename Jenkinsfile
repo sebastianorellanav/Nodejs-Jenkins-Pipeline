@@ -39,15 +39,21 @@ pipeline {
                 }
             } 
         }
-  
-  stage('Deploying into k8s'){
-    agent {label "kubepod"}
-            steps{
-                script {
-                kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "mykubeconfig")
-              }
-            }
+  stage('Apply Kubernetes Files') {
+      steps {
+          withKubeConfig([credentialsId: 'mykubeconfig']) {
+          sh 'cat deployment.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f -'
+          sh 'kubectl apply -f deployment.yaml'
         }
+      }
+  }
+  //stage('Deploying into k8s'){
+  //          steps{
+  //              script {
+  //              kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "mykubeconfig")
+  //            }
+  //          }
+  //      }
          
 }
 }
