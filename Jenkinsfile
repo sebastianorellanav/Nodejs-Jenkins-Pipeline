@@ -1,66 +1,16 @@
 pipeline {
-  agent none
-  tools {nodejs "nodejs"}
-  environment {
-    CI = true
-    DEPLOY_DIR = false
-  }
+  agent any
+
+  tools { nodejs "nodejs" }
 
   stages {
     stage('Build') {
-      agent any
-
-      stages {
-        // Build > Prepare
-        stage('Prepare') {
-          steps {
-            sh 'node --version'
-            sh 'npm --version'
-            sh 'npm config list'
-          }
-          post {
-            always {
-              updateGitlabCommitStatus name: 'jenkins-build', state: 'running'
-            }
-          }
-        }
-
-        // Build > Install dependencies
-        stage('Install dependencies') {
-          steps {
-            sh 'npm ci'
-          }
-        }
-
-        stage('Lint and Build') {
-          parallel {
-            // Build > Lint
-            stage('Lint') {
-              steps {
-                // catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
-                catchError {
-                  sh 'npm run eslint -- -f checkstyle -o eslint.xml'
-                }
-              }
-              post {
-                always {
-                  recordIssues enabledForFailure: true, tools: [esLint(id: 'eslint', name: 'ESlint ', pattern: 'eslint.xml')]
-                }
-              }
-            }
-
-            // Build > Build
-            stage('Build') {
-              steps {
-                sh 'npm run build'
-              }
-            }
-          }
-        }
+      steps {
+        echo "Realizando build ..."
+        sh "npm install"
       }
     }
-    stage('Integration Tests') {
-      // Use docker agent for integration test
+    stage('Pruebas Unitarias') {
       agent { label 'docker' }
       environment {
         MONGODB_TEST_URL = 'mongodb://mongoadmin:mongopass@mongodb:27017/feathers-test?authSource=admin'
@@ -74,43 +24,12 @@ pipeline {
             }
           }
         }
+    }
+    stage('Analisis de Código') {
+      steps {
+        echo "Realizando analisis de código ..."
+        sh 'npm run lint'
       }
-      post {
-        success {
-          publishHTML target: [
-            allowMissing: false,
-            alwaysLinkToLastBuild: true,
-            keepAll: true,
-            reportDir: 'coverage/lcov-report',
-            reportFiles: 'index.html',
-            reportName: 'Coverage Report (NYC)',
-            reportTitles: ''
-          ]
-
-          cobertura (
-            autoUpdateHealth: false,
-            autoUpdateStability: false,
-            coberturaReportFile: 'coverage/cobertura-coverage.xml',
-            conditionalCoverageTargets: '70, 0, 0',
-            failNoReports: false,
-            failUnhealthy: false,
-            failUnstable: false,
-            lineCoverageTargets: '80, 0, 0',
-            maxNumberOfBuilds: 0,
-            methodCoverageTargets: '80, 0, 0',
-            sourceEncoding: 'ASCII',
-            zoomCoverageChart: false
-          )
-        }
-      }
-    }
   }
-  post {
-    success {
-      updateGitlabCommitStatus name: 'jenkins-build', state: 'success'
-    }
-    failure {
-      updateGitlabCommitStatus name: 'jenkins-build', state: 'failed'
-    }
-  }
+}
 }
