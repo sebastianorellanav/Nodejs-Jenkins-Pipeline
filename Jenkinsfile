@@ -29,10 +29,10 @@ pipeline {
         sh 'npm run lint'
       }
   }
-  stage('Building our image') { 
+  stage('Crear y Subir Imagen App') { 
             steps { 
                 script { 
-                    dockerImage = docker.build registry + ":1.$BUILD_NUMBER"
+                    dockerImage = docker.build registry + ":1"
                     docker.withRegistry( '', registryCredential ) { 
                         dockerImage.push() 
                     }
