@@ -1,6 +1,6 @@
 pipeline {
   agent none
-
+  tools {nodejs "nodejs"}
   environment {
     CI = true
     DEPLOY_DIR = false
