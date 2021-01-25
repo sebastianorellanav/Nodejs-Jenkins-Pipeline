@@ -9,6 +9,12 @@ pipeline {
   tools { nodejs "nodejs" }
 
   stages {
+    stage('Repositorio Git') {
+      steps {
+        echo "Analizando los cambios del Respositorio..."
+        git([url: 'https://github.com/sebastianorellanav/Nodejs-Jenkins-Pipeline.git', branch: 'main', credentialsId: 'github_token'])
+      }
+    }
     stage('Build') {
       steps {
         echo "Realizando build ..."
