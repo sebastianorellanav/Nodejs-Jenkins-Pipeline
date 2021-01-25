@@ -19,8 +19,6 @@ spec:
         image: sebastianorellanav/mingeso:latest
         ports:
         - containerPort: 4000
-      - command:
-        - --anonymous-auth=true
 ---
 apiVersion: v1
 kind: Service
