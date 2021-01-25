@@ -4,8 +4,8 @@ pipeline {
         registryCredential = 'dockerhub_credential' 
         dockerImage = '' 
     }
-  //agent any
-  agent {label 'kubepod'}
+  agent any
+  
   tools { nodejs "nodejs" }
 
   stages {
@@ -39,6 +39,7 @@ pipeline {
                 }
             } 
         }
+  agent {label 'kubepod'}
   stage('Deploying into k8s'){
             steps{
                 script {
