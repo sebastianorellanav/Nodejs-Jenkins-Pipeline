@@ -7,7 +7,7 @@ pipeline {
     stage('Mongo'){
       steps{
         echo "Instalando mongo..."
-        sh "apt update"
+        sh "sudo apt update"
         sh "sudo apt install -y mongodb"
         sh "sudo systemctl status mongodb"
         sh "mongo --eval 'db.runCommand({ connectionStatus: 1 })'"
