@@ -4,8 +4,8 @@ pipeline {
         registryCredential = 'dockerhub_credential' 
         dockerImage = '' 
     }
-  agent any
-
+  //agent any
+  agent {label 'kubepod'}
   tools { nodejs "nodejs" }
 
   stages {
