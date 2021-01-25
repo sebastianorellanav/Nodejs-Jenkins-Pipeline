@@ -11,19 +11,8 @@ pipeline {
       }
     }
     stage('Pruebas Unitarias') {
-      agent { label 'docker' }
-      environment {
-        MONGODB_TEST_URL = 'mongodb://mongoadmin:mongopass@mongodb:27017/feathers-test?authSource=admin'
-      }
       steps {
-        script {
-          docker.image('mongo')
-            .withRun('-e "MONGO_INITDB_ROOT_USERNAME=mongoadmin" -e "MONGO_INITDB_ROOT_PASSWORD=mongopass"') {c ->
-            docker.image('node:10-alpine').inside("--link ${c.id}:mongodb") {
-              sh 'npm run test'
-            }
-          }
-        }
+        sh "npm test"
       }
     }
     stage('Analisis de Código') {
