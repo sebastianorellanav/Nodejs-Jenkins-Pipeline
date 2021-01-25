@@ -8,7 +8,7 @@ pipeline {
 
   stages {
     stage('Build') {
-      agent { label 'linux' }
+      agent any
 
       stages {
         // Build > Prepare
