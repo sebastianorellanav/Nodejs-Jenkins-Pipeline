@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   tools { nodejs "nodejs"
-          mongodb "mongodb"}
+          mongo "mongodb"}
 
   stages {
     stage('Build') {
