@@ -15,14 +15,11 @@ pipeline {
         git([url: 'https://github.com/sebastianorellanav/Nodejs-Jenkins-Pipeline.git', branch: 'main', credentialsId: 'github_token'])
       }
     }
-    stage('Build') {
-      steps {
-        echo "Realizando build ..."
-        sh "npm install"
-      }
-    }
     stage('Pruebas Unitarias') {
       steps {
+        echo "Instalando las dependencias ..."
+        sh "npm install"
+        echo "Realizando las pruebas unitarias ..."
         sh "npm test"
       }
     }
@@ -35,7 +32,7 @@ pipeline {
   stage('Building our image') { 
             steps { 
                 script { 
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                    dockerImage = docker.build registry + ":1.$BUILD_NUMBER"
                 }
             } 
         }
