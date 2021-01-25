@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: nodejs-deployment  
+  labels:    
+    app: myapp
+spec:  
+  replicas: 1  
+  selector:    
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec: 
+     containers:
+      - name: node-container
+        image: sebastianorellanav/mingeso:latest
+        ports:
+        - containerPort: 4000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-service
+  labels:
+    app: myapp
+spec:
+  type: NodePort
+  ports:
+  - port: 4000
+    protocol: TCP
+    targetPort: 4000
+    nodePort: 32121
+  selector:
+    app: myapp
