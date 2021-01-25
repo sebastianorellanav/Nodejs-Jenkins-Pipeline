@@ -4,7 +4,7 @@ pipeline {
         registryCredential = 'dockerhub_credential' 
         dockerImage = '' 
     }
-  agent {label "kubepod"}
+  agent any
 
   tools { nodejs "nodejs" }
 
