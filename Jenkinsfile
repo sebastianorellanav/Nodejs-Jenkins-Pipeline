@@ -41,6 +41,7 @@ pipeline {
         }
   
   stage('Deploying into k8s'){
+    agent {label "kubepod"}
             steps{
                 script {
                 kubernetesDeploy(configs: "deployment.yml", kubeconfigId: "mykubeconfig")
