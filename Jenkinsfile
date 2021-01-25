@@ -1,10 +1,18 @@
 pipeline {
   agent any
 
-  tools { nodejs "nodejs"
-          MongoDBInstallation "mongodb"}
+  tools { nodejs "nodejs"}
 
   stages {
+    stage('Mongo'){
+      steps{
+        echo "Instalando mongo..."
+        sh "sudo apt update"
+        sh "sudo apt install -y mongodb"
+        sh "sudo systemctl status mongodb"
+        sh "mongo --eval 'db.runCommand({ connectionStatus: 1 })'"
+      }
+    }
     stage('Build') {
       steps {
         echo "Realizando build ..."
