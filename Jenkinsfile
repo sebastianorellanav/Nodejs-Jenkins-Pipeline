@@ -1,6 +1,6 @@
 pipeline {
   environment { 
-        registry = "sebastianorellanav/mingeso:2" 
+        registry = "sebastianorellanav/mingeso:1.2" 
         registryCredential = 'dockerhub_credential' 
         dockerImage = '' 
     }
