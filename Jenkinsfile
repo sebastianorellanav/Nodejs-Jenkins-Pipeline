@@ -39,12 +39,11 @@ pipeline {
                 }
             } 
         }
-  stage('Apply Kubernetes Files') {
+  stage('Deploying into k8s') {
       steps {
-          milestone(1)
                 kubernetesDeploy(
                     kubeconfigId: 'mykubeconfig',
-                    configs: 'deployment',
+                    configs: 'deployment.yaml',
                     enableConfigSubstitution: true
                 )
         }
