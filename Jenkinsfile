@@ -44,8 +44,7 @@ pipeline {
       steps {
             sh "kubectl create -f deployment.yaml"
         }
-      }
-  
+      } 
   //stage('Deploying into k8s'){
   //          steps{
   //              script {
