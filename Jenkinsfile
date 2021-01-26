@@ -31,6 +31,7 @@ pipeline {
   }
   stage('Crear y Subir Imagen App') { 
             steps { 
+              echo "Creando imagen docker ..."
                 script { 
                     dockerImage = docker.build registry + ":latest"
                     docker.withRegistry( '', registryCredential ) { 
@@ -41,11 +42,7 @@ pipeline {
         }
   stage('Deploying into k8s') {
       steps {
-                kubernetesDeploy(
-                    kubeconfigId: 'mykubeconfig',
-                    configs: 'deployment.yaml',
-                    enableConfigSubstitution: true
-                )
+            sh "kubectl create -f deployment.yaml"
         }
       }
   
